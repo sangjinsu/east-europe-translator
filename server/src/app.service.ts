@@ -1,5 +1,6 @@
 import { HttpService, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Google } from './translateBehavior/google-translate'
 import { Kakao } from './translateBehavior/kakao-translate'
 import { Papago } from './translateBehavior/papago-translate'
 
@@ -20,11 +21,13 @@ export class AppService {
     const kakao = new KoEnTranslator(
       new Kakao(this.httpService, this.configService),
     )
-    kakao.performTranslate(text)
+
+    const google = new KoEnTranslator(new Google(this.configService))
 
     const translatedTexts = await Promise.allSettled([
       papago.performTranslate(text),
       kakao.performTranslate(text),
+      google.performTranslate(text),
     ]).then((results) =>
       results.map((result) => {
         if (result.status === 'fulfilled') {
@@ -32,6 +35,6 @@ export class AppService {
         }
       }),
     )
-    return { result: translatedTexts }
+    return { translation: translatedTexts }
   }
 }

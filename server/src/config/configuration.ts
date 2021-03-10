@@ -8,4 +8,7 @@ export default () => ({
     translateUrl: process.env.KAKAO_TRANSLATE_URL,
     apiKey: process.env.KAKAO_API_KEY,
   },
+  google: {
+    keyFileName: process.env.GOOGLE_KEY_FILE_NAME,
+  },
 })

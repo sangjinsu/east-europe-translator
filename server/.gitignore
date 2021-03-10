@@ -1,5 +1,6 @@
 # configuration
 /.env
+east-europe-*.json
 
 # compiled output
 /dist
