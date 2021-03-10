@@ -5,18 +5,21 @@
     <link rel="stylesheet" href="trans.css">
     <title>East Europe Translater</title>
     <script>
-        /*window.onload = function(){
+        window.onload = function(){
             //번역할 내용 보내는 코드
             var KRcontentForm = document.getElementById('KRcontent');
             KRcontentForm.addEventListener('submit', function(event) {
                 //submit 버튼 클릭 시 나올 내용
                 event.preventDefault();
-                var data = new FormData(KRcontentForm);
-                
-                ;
+                fetch("http://localhost:3000/v1/translate/en-kr", {
+                    method: "POST",
+                    body: new FormData(KRcontentForm)
+                }).then(function(res){
+                    alert("ok");
+                })
                 
             });
-        };*/
+        };
     </script>
 </head>
 <body>
