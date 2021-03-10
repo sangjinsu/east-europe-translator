@@ -38,13 +38,11 @@ export class Papago implements TranslateBehavior {
         .toPromise()
 
       const translated = response.data.message.result.translatedText as string
-
       return translated
     } catch (error) {
       if (error.response.status === 429) {
         throw new HttpException('Papago daily quota exceeded', 429)
       }
-      console.log(error)
       throw new HttpException(error.message, error.response.status)
     }
   }
