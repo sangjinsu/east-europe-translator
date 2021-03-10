@@ -4,4 +4,8 @@ export default () => ({
     ClientId: process.env.PAPAGO_CLIENT_ID,
     ClientSecret: process.env.PAPAGO_CLIENT_SECRET,
   },
+  kakao: {
+    translateUrl: process.env.KAKAO_TRANSLATE_URL,
+    apiKey: process.env.KAKAO_API_KEY,
+  },
 })
