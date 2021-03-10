@@ -4,31 +4,46 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="trans.css">
     <title>East Europe Translater</title>
+    <script>
+        /*window.onload = function(){
+            //번역할 내용 보내는 코드
+            var KRcontentForm = document.getElementById('KRcontent');
+            KRcontentForm.addEventListener('submit', function(event) {
+                //submit 버튼 클릭 시 나올 내용
+                event.preventDefault();
+                var data = new FormData(KRcontentForm);
+                
+                ;
+                
+            });
+        };*/
+    </script>
 </head>
 <body>
     <div class="container">
         <h1>East Europe Translater</h1>
         <!--'action' 속성에는 입력된 로그인 데이터를 보낼 서버 페이지의 주소-->
-        <form action="" method="post">
+        <form id="KRcontent" name="KRcontent" action="http://localhost:3000/v1/translate/en-kr" method="post">
             <div class="Wrap1 clear">
-                <textarea name="kr" id="origin" cols="30" rows="10"></textarea>
+                <textarea name="text" id="origin" cols="30" rows="10"></textarea>
                 <input type="submit" value="전송" class="submit">
             </div>
-            <div class="Wrap2">
-               <button class="kakao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ullam veniam, modi nobis temporibus eius ratione suscipit maxime, est reprehenderit! Ducimus animi corporis impedit tempore expedita commodi, suscipit dolorem voluptate.</button>
-               <button class="naver">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro odit in aspernatur saepe voluptatibus, repellat, doloremque iusto non numquam eligendi rerum quos officia dolore amet molestiae tenetur iste, dolor, enim.</button>
-               <button class="google">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, temporibus officiis delectus sed impedit, magnam eveniet voluptates veritatis autem repudiandae, maxime ut debitis doloribus, a fugit repellat excepturi! Mollitia, eum!</button>
-            </div>
-            <div class="Wrap3">
-              <div class="lang">
-                  <input type="radio" name="lang" value="Ukraine">
-                  <label for="lang">Україна</label>
-                   <input type="radio" name="lang" value="romania">
-                   <label for="lang">România</label>
-              </div>
-                <div class="result">це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
-            </div>
         </form>
+        <div class="Wrap2">
+           <div class="lang">
+                <input type="radio" name="lang" value="Ukraine">
+                <label for="lang">Україна</label>
+                <input type="radio" name="lang" value="romania">
+                <label for="lang">România</label>
+            </div>
+            <button class="kakao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ullam veniam, modi nobis temporibus eius ratione suscipit maxime, est reprehenderit! Ducimus animi corporis impedit tempore expedita commodi, suscipit dolorem voluptate.</button>
+            <button class="naver">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro odit in aspernatur saepe voluptatibus, repellat, doloremque iusto non numquam eligendi rerum quos officia dolore amet molestiae tenetur iste, dolor, enim.</button>
+            <button class="google">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, temporibus officiis delectus sed impedit, magnam eveniet voluptates veritatis autem repudiandae, maxime ut debitis doloribus, a fugit repellat excepturi! Mollitia, eum!</button>
+        </div>
+        <div class="Wrap3">
+        
+        <div class="result">це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+        </div>
     </div>
     <footer>
        <p>github: @blarbalr</p>
