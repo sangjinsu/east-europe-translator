@@ -8,17 +8,25 @@
         window.onload = function(){
             //번역할 내용 보내는 코드
             var KRcontentForm = document.getElementById('KRcontent');
-            KRcontentForm.addEventListener('submit', function(event) {
-                //submit 버튼 클릭 시 나올 내용
-                event.preventDefault();
-                fetch("http://localhost:3000/v1/translate/en-kr", {
-                    method: "POST",
-                    body: new FormData(KRcontentForm)
-                }).then(function(res){
-                    alert("ok");
+            KRcontentForm.addEventListener('submit', function (event) {
+          //submit 버튼 클릭 시 나올 내용
+                event.preventDefault()
+
+                const body = JSON.stringify(
+                    Object.fromEntries(new FormData(event.target))
+                )
+
+                fetch('http://localhost:3000/v1/translate/en-kr', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                    mode: 'cors',
+                    body,
+                }).then(function (res) {
+                    alert('ok')
                 })
-                
-            });
+            })
         };
     </script>
 </head>
