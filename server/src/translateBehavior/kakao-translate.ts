@@ -8,7 +8,7 @@ export class Kakao implements TranslateBehavior {
     private configService: ConfigService,
   ) {}
 
-  async translate(
+  public async translate(
     text: string,
     source: string,
     target: string,

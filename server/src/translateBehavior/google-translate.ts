@@ -6,7 +6,7 @@ import { TranslateBehavior } from './translate-behavior.interface'
 export class Google implements TranslateBehavior {
   constructor(private configService: ConfigService) {}
 
-  async translate(
+  public async translate(
     text: string,
     _source: string,
     target: string,

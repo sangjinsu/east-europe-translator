@@ -1,16 +1,11 @@
 import { HttpService, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TranslationDto } from './dto/translation.dto'
+import { EnRo, EnRu, KoEn, RuUk } from './srcTarget/source-target'
 import { Google } from './translateBehavior/google-translate'
 import { Kakao } from './translateBehavior/kakao-translate'
 import { Papago } from './translateBehavior/papago-translate'
-import {
-  EnRoTranslator,
-  EnRuTranslator,
-  KoEnTranslator,
-  RuUkTranslator,
-  Translator,
-} from './translator/translator'
+import { Translator } from './translator/translator'
 
 @Injectable()
 export class AppService {
@@ -39,16 +34,19 @@ export class AppService {
   // 한국어 - 영어 번역
   async koEnTranslate(translationDto: TranslationDto) {
     const { text } = translationDto
+    const koEn = new KoEn()
 
-    const papago = new KoEnTranslator(
+    const papago = new Translator(
       new Papago(this.httpService, this.configService),
+      koEn,
     )
 
-    const kakao = new KoEnTranslator(
+    const kakao = new Translator(
       new Kakao(this.httpService, this.configService),
+      koEn,
     )
 
-    const google = new KoEnTranslator(new Google(this.configService))
+    const google = new Translator(new Google(this.configService), koEn)
 
     const translatedTexts = await this.requestTranslate(text, [
       papago,
@@ -62,8 +60,9 @@ export class AppService {
   // 영어 - 루마니아어 번역
   async enRoTranslate(translationDto: TranslationDto) {
     const { text } = translationDto
+    const enRo = new EnRo()
 
-    const google = new EnRoTranslator(new Google(this.configService))
+    const google = new Translator(new Google(this.configService), enRo)
 
     const translatedText = await this.requestTranslate(text, [google])
 
@@ -73,23 +72,23 @@ export class AppService {
   // 영어 우크라이나어 번역
   async enUkTranslate(translationDto: TranslationDto) {
     const { text } = translationDto
+    const enRu = new EnRu()
+    const ruUk = new RuUk()
 
-    const enRuKakao = new EnRuTranslator(
+    const kakao = new Translator(
       new Kakao(this.httpService, this.configService),
+      enRu,
     )
-    const enRuGoogle = new EnRuTranslator(new Google(this.configService))
+    const google = new Translator(new Google(this.configService), enRu)
 
-    const russianTexts = await this.requestTranslate(text, [
-      enRuKakao,
-      enRuGoogle,
-    ])
+    const russianTexts = await this.requestTranslate(text, [kakao, google])
 
-    const ruUkGoogle = new RuUkTranslator(new Google(this.configService))
+    google.sourceTarget = ruUk
 
     const translatedText: string[] = []
     for (let i = 0; i < russianTexts.length; i++) {
       translatedText.push(
-        ...(await this.requestTranslate(russianTexts[i], [ruUkGoogle])),
+        ...(await this.requestTranslate(russianTexts[i], [google])),
       )
     }
 
