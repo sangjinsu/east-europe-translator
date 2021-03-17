@@ -20,14 +20,14 @@ export class AppService {
     for (let i = 0; i < translators.length; i++) {
       promises.push(translators[i].performTranslate(text))
     }
-    const translatedText: string[] = await Promise.allSettled(promises).then(
-      (results) =>
-        results.map((result) => {
-          if (result.status === 'fulfilled') {
-            return result.value
-          }
-        }),
-    )
+    const responses = await Promise.allSettled(promises)
+
+    const translatedText = responses.reduce((translations: string[], res) => {
+      if (res.status === 'fulfilled') {
+        translations.push(res.value)
+      }
+      return translations
+    }, [])
     return translatedText
   }
 
