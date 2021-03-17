@@ -16,6 +16,7 @@
                     Object.fromEntries(new FormData(event.target))
                 )
 
+                //Wrap1 post request
                 fetch('http://localhost:3000/v1/translate/en-kr', {
                     method: 'POST',
                     headers: {
@@ -23,10 +24,39 @@
                     },
                     mode: 'cors',
                     body,
+                }).then(function(response) {
+                    //status Error
+                    if (response.status >= 400 && response.status < 600) {
+                        alert("Error(check your console)");
+                        throw new Error("Bad response from server");
+                    }
+                    return response;
                 }).then(function (res) {
-                    alert('ok')
-                })
-            })
+                    res.text().then(function (data) {
+                        //string to array
+                        var start = data.indexOf("[");
+                        var end = data.indexOf("]", start+1);
+
+                        var str = data.substring(start+1, end); 
+                        var tmpList = str.replace(/"/gi,' ').split(",");
+                        const list = tmpList.map(x=>x.trim());
+                        return list;
+                    }).then(function(arr){
+                        //make refresh
+                        var parentNode = document.querySelector(".eng");
+                        while (parentNode.firstChild) {
+                            parentNode.removeChild(parentNode.firstChild);
+                        };
+                        //string to button
+                        const tags = arr.map(x=>"<button>"+x+"</button>");
+                        console.log(tags);
+                        tags.forEach(function(tag){
+                            document.querySelector(".eng").insertAdjacentHTML('beforeend',tag);
+                        });
+                    })
+                    .catch(error => console.error('Fetch Error:', error));
+                });
+            });
         };
     </script>
 </head>
@@ -47,9 +77,9 @@
                 <input type="radio" name="lang" value="romania">
                 <label for="lang">România</label>
             </div>
-            <button class="kakao">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis ullam veniam, modi nobis temporibus eius ratione suscipit maxime, est reprehenderit! Ducimus animi corporis impedit tempore expedita commodi, suscipit dolorem voluptate.</button>
-            <button class="naver">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro odit in aspernatur saepe voluptatibus, repellat, doloremque iusto non numquam eligendi rerum quos officia dolore amet molestiae tenetur iste, dolor, enim.</button>
-            <button class="google">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, temporibus officiis delectus sed impedit, magnam eveniet voluptates veritatis autem repudiandae, maxime ut debitis doloribus, a fugit repellat excepturi! Mollitia, eum!</button>
+            <div class="eng">
+                <div class="help">1차 번역(영어)이 완료되면 최종 번역하실 언어와 마음에 드는 1차 번역을 눌러주세요.</div>
+            </div>
         </div>
         <div class="Wrap3">
         
