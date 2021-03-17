@@ -74,16 +74,22 @@ export class AppService {
   async enUkTranslate(translationDto: TranslationDto) {
     const { text } = translationDto
 
-    const kakao = new EnRuTranslator(
+    const enRuKakao = new EnRuTranslator(
       new Kakao(this.httpService, this.configService),
     )
-    const google = new EnRuTranslator(new Google(this.configService))
+    const enRuGoogle = new EnRuTranslator(new Google(this.configService))
 
-    const russianTexts = await this.requestTranslate(text, [kakao, google])
+    const russianTexts = await this.requestTranslate(text, [
+      enRuKakao,
+      enRuGoogle,
+    ])
+
+    const ruUkGoogle = new RuUkTranslator(new Google(this.configService))
+
     const translatedText: string[] = []
     for (let i = 0; i < russianTexts.length; i++) {
       translatedText.push(
-        ...(await this.requestTranslate(russianTexts[i], [kakao, google])),
+        ...(await this.requestTranslate(russianTexts[i], [ruUkGoogle])),
       )
     }
 
