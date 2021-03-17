@@ -1,6 +1,6 @@
 import { TranslateBehavior } from 'src/translateBehavior/translate-behavior.interface'
 
-export class Translator {
+export abstract class Translator {
   constructor(
     private translateBehavior: TranslateBehavior,
     private source: string,
