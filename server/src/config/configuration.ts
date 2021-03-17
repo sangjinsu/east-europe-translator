@@ -10,5 +10,7 @@ export default () => ({
   },
   google: {
     keyFileName: process.env.GOOGLE_KEY_FILE_NAME,
+    projectId: process.env.GOOGLE_PROJECT_ID,
+    locations: process.env.GOOGLE_LOCATIONS,
   },
 })
