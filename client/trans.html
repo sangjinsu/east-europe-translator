@@ -6,18 +6,32 @@
     <title>East Europe Translater</title>
     <script>
         window.onload = function(){
+            //글자수 제한
+            const text = document.getElementById('text');
+            text.addEventListener('keyup',function(e){
+                var content = this.value;
+                var counter = document.getElementById('text_cnt');
+
+                counter.innerHTML = "("+content.length+" / 3000)";
+
+                if(content.length > 3000) {
+                    alert("3000자를 초과하였습니다.");
+                    this.value = content.substring(0, 3000);
+                    counter.innerHTML = "(3000 / 3000)";
+                }
+            });
             //번역할 내용 보내는 코드
             var KRcontentForm = document.getElementById('KRcontent');
             KRcontentForm.addEventListener('submit', function (event) {
-          //submit 버튼 클릭 시 나올 내용
-                event.preventDefault()
+                //submit 버튼 클릭 시 나올 내용
+                event.preventDefault();
 
                 const body = JSON.stringify(
                     Object.fromEntries(new FormData(event.target))
                 )
 
                 //Wrap1 post request
-                fetch('http://localhost:3000/v1/translate/en-kr', {
+                fetch(KRcontentForm.action, {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',
@@ -64,9 +78,10 @@
     <div class="container">
         <h1>East Europe Translater</h1>
         <!--'action' 속성에는 입력된 로그인 데이터를 보낼 서버 페이지의 주소-->
-        <form id="KRcontent" name="KRcontent" action="http://localhost:3000/v1/translate/en-kr" method="post">
+        <form id="KRcontent" name="KRcontent" action="http://localhost:3000/v1/translate/ko-en" method="post">
             <div class="Wrap1 clear">
-                <textarea name="text" id="origin" cols="30" rows="10"></textarea>
+                <textarea id="text" name="text" placeholder="3000자 이하 입력"></textarea>
+                <div id="text_cnt">(0 / 3000)</div>
                 <input type="submit" value="전송" class="submit">
             </div>
         </form>
