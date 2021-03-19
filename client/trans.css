@@ -31,12 +31,13 @@ h1{
     margin: 10px 0 40px 0;
     text-align: center;
 }
-#origin {
+#text {
     width: 100%;
     height: 200px;
     resize:none;
     font-size: 16px;
 }
+
 .submit {
     float: right;
     margin: 10px 0;
