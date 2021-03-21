@@ -5,26 +5,25 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import configuration from './config/configuration'
 
-describe('AppController', () => {
-  let appController: AppController
+describe('TranslateService', () => {
+  let service: AppService
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       imports: [HttpModule, ConfigModule.forRoot({ load: [configuration] })],
       controllers: [AppController],
       providers: [AppService],
     }).compile()
-
-    appController = app.get<AppController>(AppController)
+    service = module.get<AppService>(AppService)
   })
 
   it('should be defined', () => {
-    expect(appController).toBeDefined()
+    expect(service).toBeDefined()
   })
 
   describe('koEnTranslate', () => {
     it('should return an array of Korean-English 3 translations in Object', async () => {
-      const response = await appController.koEnTranslate({
+      const response = await service.koEnTranslate({
         text: '안녕하세요',
       })
       expect(response).toBeInstanceOf(Object)
@@ -37,7 +36,7 @@ describe('AppController', () => {
 
   describe('koEnTranslate', () => {
     it('should return an array of Korean-English 3 translations in Object', async () => {
-      const response = await appController.koEnTranslate({
+      const response = await service.koEnTranslate({
         text: `안녕하세요.
         저는 홍길동입니다.`,
       })
@@ -51,7 +50,7 @@ describe('AppController', () => {
 
   describe('enRoTranslate', () => {
     it('should return an array of English-Romanian 1 translation in Object', async () => {
-      const response = await appController.enRoTranslate({
+      const response = await service.enRoTranslate({
         text: 'hi',
       })
       expect(response).toBeInstanceOf(Object)
@@ -64,7 +63,7 @@ describe('AppController', () => {
 
   describe('enRoTranslate', () => {
     it('should return an array of English-Romanian 1 translation in Object', async () => {
-      const response = await appController.enRoTranslate({
+      const response = await service.enRoTranslate({
         text: `hi.
         who are you?`,
       })
@@ -78,7 +77,7 @@ describe('AppController', () => {
 
   describe('enUkTranslate', () => {
     it('should return an array of English-Ukrainian 2 translations in Object', async () => {
-      const response = await appController.enUkTranslate({
+      const response = await service.enUkTranslate({
         text: 'hi',
       })
       expect(response).toBeInstanceOf(Object)
@@ -91,7 +90,7 @@ describe('AppController', () => {
 
   describe('enUkTranslate', () => {
     it('should return an array of English-Ukrainian 2 translations in Object', async () => {
-      const response = await appController.enUkTranslate({
+      const response = await service.enUkTranslate({
         text: `hi.
         who are you?`,
       })
