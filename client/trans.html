@@ -67,6 +67,77 @@
                         tags.forEach(function(tag){
                             document.querySelector(".eng").insertAdjacentHTML('beforeend',tag);
                         });
+                        var EngButton = document.querySelectorAll('.eng button');
+                        return EngButton;
+                    }).then(function(EngButton){
+                        //when eng button click
+                        [].forEach.call(EngButton,function(btn){ 
+                            btn.addEventListener("click",function(e){
+                                //Find the Selected languege
+                                var lang_length = document.getElementsByName('lang').length;
+                                for (var i=0; i<lang_length; i++) {
+                                    if (document.getElementsByName("lang")[i].checked == true) {
+                                        var SelectedLang= document.getElementsByName("lang")[i].value;
+                                    }
+                                }
+
+                                //make object for request
+                                const body = JSON.stringify(
+                                    {
+                                        "text": this.innerText
+                                    }
+                                );
+                                
+                                //Select URL acorrding to languege
+                                function GetURL (SelectedLang) {
+                                    if(SelectedLang == "romania") {
+                                        return "http://localhost:3000/v1/translate/en-ro";
+                                    }else {
+                                        return "http://localhost:3000/v1/translate/en-uk";
+                                    }
+                                }
+
+                                //Wrap2 POST request
+                                fetch(GetURL(SelectedLang), {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        },
+                                    mode: 'cors',
+                                    body,
+                                }).then(function(response) {
+                                    //status Error
+                                    if (response.status >= 400 && response.status < 600) {
+                                        alert("Error(check your console)");
+                                        throw new Error("Bad response from server");
+                                    }
+                                    return response;
+                                }).then(function (res) {
+                                    res.text().then(function (data) {
+                                        //string to array
+                                        var start = data.indexOf("[");
+                                        var end = data.indexOf("]", start+1);
+
+                                        var str = data.substring(start+1, end); 
+                                        var tmpList = str.replace(/"/gi,' ').split(",");
+                                        const list = tmpList.map(x=>x.trim());
+                                        return list;
+                                    }).then(function(arr){
+                                        //make refresh
+                                        var parentNode = document.querySelector(".result");
+                                        while (parentNode.firstChild) {
+                                            parentNode.removeChild(parentNode.firstChild);
+                                        };
+                                        //string to button
+                                        const tags = arr.map(x=>"<div>"+x+"</div>");
+                                        console.log(tags);
+                                        tags.forEach(function(tag){
+                                            document.querySelector(".result").insertAdjacentHTML('beforeend',tag);
+                                        });
+                                    }).catch(error => console.error('Fetch Error:', error));
+                                });
+                            }); 
+                        });
                     })
                     .catch(error => console.error('Fetch Error:', error));
                 });
@@ -98,7 +169,9 @@
         </div>
         <div class="Wrap3">
         
-        <div class="result">це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+        <div class="result">
+            <div class="help">최종 번역 결과</div>
+        </div>
         </div>
     </div>
     <footer>
