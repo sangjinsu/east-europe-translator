@@ -89,7 +89,7 @@ h1{
     transform: scale(1.05, 1.05);
 }
 
-.result {
+.result div {
     margin-top: 20px;
     padding: 15px;
     border: 1px solid #777;
