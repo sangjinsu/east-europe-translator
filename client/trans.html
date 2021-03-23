@@ -5,46 +5,7 @@
     <link rel="stylesheet" href="trans.css">
     <title>East Europe Translater</title>
     <script src="func.js" type="text/javascript"></script>
-    <script>
-        window.onload = function(){
-            //글자수 제한
-            limitChar();
-            //번역할 내용 보내는 코드
-            const KRcontentForm = document.getElementById('KRcontent');
-            KRcontentForm.addEventListener('submit', function (event) {
-                //submit 버튼 클릭 시 나올 내용
-                event.preventDefault();
-
-                const body = JSON.stringify(
-                    Object.fromEntries(new FormData(event.target))
-                )
-
-                get_1ndTranslation(event.target).then(function(EngButton){
-                    //when eng button click
-                    [].forEach.call(EngButton,function(btn){ 
-                            btn.addEventListener("click",function(e){
-                                event.preventDefault();
-
-                                //find selected languege
-                                const langueges = document.getElementsByName('lang');
-                                const SelectedLang = FindLanguege(langueges);
-
-                                //make object for request
-                                const body = JSON.stringify(
-                                    {
-                                        "text": this.innerText
-                                    }
-                                );
-
-                                get_2ndTranslation(body, SelectedLang);
-
-                            });
-                        });
-                    });
-
-            });
-        };
-    </script>
+    <script src="exec.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="container">
