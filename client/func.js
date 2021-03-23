@@ -40,10 +40,11 @@ function strTOarr(data) {
     const end = data.indexOf("]", start+1);
 
     const str = data.substring(start+1, end); 
-    const tmpList = str.replace(/"/gi,' ').split(",");
-    const list = tmpList.map(x=>x.trim());
+    const tmpList = str.replace(/(?:")/g,' ').split(",");
+    const list = tmpList.map(x=>x.trim().replace(/\\r\\n|\\n|\\r/gm,"<br>"));
     return list;
 }
+
 function removeNode(node) {
     while (node.firstChild) {
         node.removeChild(node.firstChild);
