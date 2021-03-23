@@ -4,24 +4,13 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="trans.css">
     <title>East Europe Translater</title>
+    <script src="func.js" type="text/javascript"></script>
     <script>
         window.onload = function(){
             //글자수 제한
-            const text = document.getElementById('text');
-            text.addEventListener('keyup',function(e){
-                var content = this.value;
-                var counter = document.getElementById('text_cnt');
-
-                counter.innerHTML = "("+content.length+" / 3000)";
-
-                if(content.length > 3000) {
-                    alert("3000자를 초과하였습니다.");
-                    this.value = content.substring(0, 3000);
-                    counter.innerHTML = "(3000 / 3000)";
-                }
-            });
+            limitChar();
             //번역할 내용 보내는 코드
-            var KRcontentForm = document.getElementById('KRcontent');
+            const KRcontentForm = document.getElementById('KRcontent');
             KRcontentForm.addEventListener('submit', function (event) {
                 //submit 버튼 클릭 시 나올 내용
                 event.preventDefault();
@@ -30,46 +19,29 @@
                     Object.fromEntries(new FormData(event.target))
                 )
 
-                //Wrap1 post request
-                fetch(KRcontentForm.action, {
-                    method: 'POST',
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    mode: 'cors',
-                    body,
-                }).then(function(response) {
-                    //status Error
-                    if (response.status >= 400 && response.status < 600) {
-                        alert("Error(check your console)");
-                        throw new Error("Bad response from server");
-                    }
-                    return response;
-                }).then(function (res) {
-                    res.text().then(function (data) {
-                        //string to array
-                        var start = data.indexOf("[");
-                        var end = data.indexOf("]", start+1);
+                get_1ndTranslation(event.target).then(function(EngButton){
+                    //when eng button click
+                    [].forEach.call(EngButton,function(btn){ 
+                            btn.addEventListener("click",function(e){
+                                event.preventDefault();
 
-                        var str = data.substring(start+1, end); 
-                        var tmpList = str.replace(/"/gi,' ').split(",");
-                        const list = tmpList.map(x=>x.trim());
-                        return list;
-                    }).then(function(arr){
-                        //make refresh
-                        var parentNode = document.querySelector(".eng");
-                        while (parentNode.firstChild) {
-                            parentNode.removeChild(parentNode.firstChild);
-                        };
-                        //string to button
-                        const tags = arr.map(x=>"<button>"+x+"</button>");
-                        console.log(tags);
-                        tags.forEach(function(tag){
-                            document.querySelector(".eng").insertAdjacentHTML('beforeend',tag);
+                                //find selected languege
+                                const langueges = document.getElementsByName('lang');
+                                const SelectedLang = FindLanguege(langueges);
+
+                                //make object for request
+                                const body = JSON.stringify(
+                                    {
+                                        "text": this.innerText
+                                    }
+                                );
+
+                                get_2ndTranslation(body, SelectedLang);
+
+                            });
                         });
-                    })
-                    .catch(error => console.error('Fetch Error:', error));
-                });
+                    });
+
             });
         };
     </script>
@@ -98,7 +70,9 @@
         </div>
         <div class="Wrap3">
         
-        <div class="result">це текст-"риба", що використовується в друкарстві та дизайні. Lorem Ipsum є, фактично, стандартною "рибою" аж з XVI сторіччя, коли невідомий друкар взяв шрифтову гранку та склав на ній підбірку зразків шрифтів. "Риба" не тільки успішно пережила п'ять століть, але й прижилася в електронному верстуванні, залишаючись по суті незмінною. Вона популяризувалась в 60-их роках минулого сторіччя завдяки виданню зразків шрифтів Letraset, які містили уривки з Lorem Ipsum, і вдруге - нещодавно завдяки програмам комп'ютерного верстування на кшталт Aldus Pagemaker, які використовували різні версії Lorem Ipsum.</div>
+        <div class="result">
+            <div class="help">최종 번역 결과</div>
+        </div>
         </div>
     </div>
     <footer>
