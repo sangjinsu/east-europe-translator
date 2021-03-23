@@ -55,7 +55,6 @@ function makeButton(arr){
     removeNode(parentNode);
     //string to button
     const tags = arr.map(x=>"<button>"+x+"</button>");
-    console.log(tags);
     tags.forEach(function(tag){
         document.querySelector(".eng").insertAdjacentHTML('beforeend',tag);
     });
@@ -103,7 +102,6 @@ function makeResultTag(arr){
     const parentNode = document.querySelector(".result");
     removeNode(parentNode);
     const tags = arr.map(x=>"<div>"+x+"</div>");
-    console.log(tags);
     tags.forEach(function(tag){
         document.querySelector(".result").insertAdjacentHTML('beforeend',tag);
     });
