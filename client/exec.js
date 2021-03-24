@@ -9,7 +9,11 @@ window.onload = function(){
         //submit 버튼 클릭 시 나올 내용
         get_1ndTranslation(event.target).then(function(EngButton){
             //when eng button click
+            if(!EngButton){
+                throw new Error("No exist Button");
+            }
             [].forEach.call(EngButton,function(btn){ 
+                
                 btn.addEventListener("click",function(e){
                     e.preventDefault();
                     //Find the Selected languege
@@ -27,7 +31,7 @@ window.onload = function(){
 
                 });
             });
-        });
+        }).catch(error => console.log(error));
     });
     
 }
