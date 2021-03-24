@@ -1,8 +1,10 @@
-import { HttpException, HttpService } from '@nestjs/common'
+import { HttpException, HttpService, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TranslateBehavior } from './translate-behavior.interface'
 
 export class Papago implements TranslateBehavior {
+  private readonly logger = new Logger(Papago.name)
+
   constructor(
     private httpService: HttpService,
     private configService: ConfigService,
@@ -41,8 +43,17 @@ export class Papago implements TranslateBehavior {
       return translated
     } catch (error) {
       if (error.response.status === 429) {
-        throw new HttpException('Papago daily quota exceeded', 429)
+        this.logger.error(
+          'Papago daily quota exceeded: error status ' + error.response.status,
+        )
+        throw new HttpException(
+          'Papago daily quota exceeded',
+          error.response.status,
+        )
       }
+      this.logger.error(
+        error.message + ': error status ' + error.response.status,
+      )
       throw new HttpException(error.message, error.response.status)
     }
   }
