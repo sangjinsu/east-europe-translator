@@ -18,20 +18,28 @@ function limitChar(){
 
 //번역할 내용 보내는 코드
 const getTraslation = async (body, url) => {
-    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: {
-                        'Content-Type': 'application/json',
-                        },
-                        mode: 'cors',
-                        body,
-                    });
-                    
-    if (response.status >= 400 && response.status < 600) {
+    try {
+        if (!url) {
+            throw new Error("Can not request to server(url)");
+        }
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            mode: 'cors',
+            body,
+        });
+        
+        if (response.status >= 400 && response.status < 600) {
         alert("Error(check your console)");
         throw new Error("Bad response from server");
+        }
+        return response.text();
+    } catch (error) {
+        console.log(error);
     }
-    return response.text();
+
 }
 
 function strTOarr(data) {
@@ -39,9 +47,10 @@ function strTOarr(data) {
     const start = data.indexOf("[");
     const end = data.indexOf("]", start+1);
 
-    const str = data.substring(start+1, end); 
-    const tmpList = str.replace(/(?:")/g,' ').split(",");
+    const str = data.substring(start+2, end-1);
+    let tmpList = str.split('\",\"');
     const list = tmpList.map(x=>x.trim().replace(/\\r\\n|\\n|\\r/gm,"<br>"));
+
     return list;
 }
 
@@ -67,12 +76,20 @@ const get_1ndTranslation = async (form) => {
     const body = JSON.stringify(
         Object.fromEntries(new FormData(form))
     );
+    try {
+        const traslation = await getTraslation(body, form.action);
+        if(!traslation){
+            throw new Error("can't not get response object");
+        }
+        const arr = await strTOarr(traslation);
+        const btn = await makeButton(arr);
 
-    const traslation = await getTraslation(body, form.action);
-    const arr = await strTOarr(traslation);
-    const btn = await makeButton(arr);
+        return btn;
+    } catch (error) {
+        console.log(error);
+    }
 
-    return btn;
+    
 }
 //////////////////////////////////////////////////////////////////////////
 //Find the Selected languege
@@ -96,6 +113,7 @@ function GetURL (SelectedLang) {
     }
     else {
         alert("번역할 언어를 선택해주세요.");
+        return false;
     }
 }
 function makeResultTag(arr){
@@ -108,7 +126,15 @@ function makeResultTag(arr){
     });
 }
 const get_2ndTranslation = async (body, SelectedLang) => {
-    const traslation = await getTraslation(body, GetURL(SelectedLang));
-    const arr = await strTOarr(traslation);
-    await makeResultTag(arr);
+    try {
+        const traslation = await getTraslation(body, GetURL(SelectedLang));
+        if(!traslation){
+            throw new Error("can't not get response object");
+        }
+        const arr = await strTOarr(traslation);
+        await makeResultTag(arr);
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
