@@ -1,9 +1,10 @@
 import { TranslationServiceClient } from '@google-cloud/translate'
-import { HttpException } from '@nestjs/common'
+import { HttpException, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { TranslateBehavior } from './translate-behavior.interface'
 
 export class Google implements TranslateBehavior {
+  private readonly logger = new Logger(Google.name)
   constructor(private configService: ConfigService) {}
 
   public async translate(
@@ -34,8 +35,17 @@ export class Google implements TranslateBehavior {
       return translated
     } catch (error) {
       if (error.response.status === 429) {
-        throw new HttpException('Google daily quota exceeded', 429)
+        this.logger.error(
+          'Google daily quota exceeded: error status ' + error.response.status,
+        )
+        throw new HttpException(
+          'Google daily quota exceeded',
+          error.response.status,
+        )
       }
+      this.logger.error(
+        error.message + ': error status ' + error.response.status,
+      )
       throw new HttpException(error.message, error.response.status)
     }
   }
