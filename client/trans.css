@@ -44,11 +44,11 @@ h1{
     width: 90px;
     height: 35px;
     border: none;
+    outline: none;
 }
-.submit:hover, .submit:active, .submit:focus {
+.submit:hover, .submit:active {
     cursor: pointer;
     box-shadow: 0px 0px 5px 1px #eee;
-    
 }
 .lang {
     margin: 20px 0 10px 0;
@@ -77,16 +77,12 @@ h1{
     padding: 10px;
     box-shadow: 0px 0px 10px 1px #ccc;
     font-size: 16px;
-    -webkit-transition: transform 0.5s;
-    transition: transform 0.5s;
+    outline: none;
 }
-.Wrap2 button:hover, .Wrap2 button:active, .Wrap2 button:focus {
+.Wrap2 button:hover, .Wrap2 button:active {
     cursor: pointer;
     background: #eee;
     box-shadow: 0px 0px 10px 1px #eee;
-    -webkit-transform: scale(1.05, 1.05);
-    -ms-transform: scale(1.05, 1.05);
-    transform: scale(1.05, 1.05);
 }
 
 .result div {
