@@ -6,12 +6,12 @@ function limitChar(){
         var content = this.value;
         var counter = document.getElementById('text_cnt');
 
-        counter.innerHTML = "("+content.length+" / 3000)";
+        counter.innerHTML = "("+content.length+" / 1000)";
 
-        if(content.length > 3000) {
-            alert("3000자를 초과하였습니다.");
-            this.value = content.substring(0, 3000);
-            counter.innerHTML = "(3000 / 3000)";
+        if(content.length > 1000) {
+            alert("1000자를 초과하였습니다.");
+            this.value = content.substring(0, 1000);
+            counter.innerHTML = "(1000 / 1000)";
         }
     })
 };
@@ -32,7 +32,6 @@ const getTraslation = async (body, url) => {
         });
         
         if (response.status >= 400 && response.status < 600) {
-        alert("Error(check your console)");
         throw new Error("Bad response from server");
         }
         return response.text();
