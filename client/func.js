@@ -105,10 +105,10 @@ function FindLanguege(langueges){
 //Select URL acorrding to languege
 function GetURL (SelectedLang) {
     if(SelectedLang === "romania") {
-        return "http://localhost:3000/v1/translate/en-ro";
+        return "http://easteuropetranslator-env-elb.eba-rwgxnyvi.ap-northeast-2.elasticbeanstalk.com/v1/translate/en-ro";
     }
     else if(SelectedLang === "Ukraine"){
-        return "http://localhost:3000/v1/translate/en-uk";
+        return "http://easteuropetranslator-env-elb.eba-rwgxnyvi.ap-northeast-2.elasticbeanstalk.com/v1/translate/en-uk";
     }
     else {
         alert("번역할 언어를 선택해주세요.");
