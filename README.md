@@ -2,6 +2,13 @@
 
 팀원: 상진수(백엔드), 오수빈(프론트엔드)
 
+## 0. east europe translator site
+
+[go to east europe trnslator](https://www.e2translate.com/)
+
+- https://www.e2translate.com/
+- https://e2translate.com/
+
 ## 1. 프로젝트 소개
 
 ### 프로젝트 주제
@@ -12,6 +19,11 @@
 
 - 우크라이나어 학습 효율성 향상
 - 루마니아어 학습 효율성 향상
+
+### 예상 사용 인원
+
+- 최대 40명
+- 최소 5명 이내
 
 ### 프로젝트 언어 및 환경
 
