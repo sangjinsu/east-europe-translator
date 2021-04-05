@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="trans.css" />
+    <title>East Europe Translator</title>
+    <script src="func.js" type="text/javascript"></script>
+    <script src="exec.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>East Europe Translator</h1>
+      <!--'action' 속성에는 입력된 로그인 데이터를 보낼 서버 페이지의 주소-->
+      <form
+        id="KRcontent"
+        name="KRcontent"
+        action="https://server.e2translate.com/v1/translate/ko-en"
+        method="post"
+      >
+        <div class="Wrap1 clear">
+          <textarea
+            id="text"
+            name="text"
+            placeholder="1000자 이하 입력"
+          ></textarea>
+          <div id="text_cnt">(0 / 1000)</div>
+          <input type="submit" value="전송" class="submit" />
+        </div>
+      </form>
+      <div class="Wrap2">
+        <div class="lang">
+          <input type="radio" name="lang" value="Ukraine" />
+          <label for="lang">Україна</label>
+          <input type="radio" name="lang" value="romania" />
+          <label for="lang">România</label>
+        </div>
+        <div class="eng">
+          <div class="help">
+            1차 번역(영어)이 완료되면 최종 번역하실 언어와 마음에 드는 1차
+            번역을 눌러주세요.
+          </div>
+        </div>
+      </div>
+      <div class="Wrap3">
+        <div class="result">
+          <div class="help">최종 번역 결과</div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p><b>github:</b> https://github.com/jinsuSang/east-europe-translator</p>
+    </footer>
+  </body>
+</html>
