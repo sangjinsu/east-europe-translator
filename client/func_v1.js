@@ -73,6 +73,13 @@ function makeButton(arr) {
 const get_1ndTranslation = async (form) => {
   const body = JSON.stringify(Object.fromEntries(new FormData(form)))
   try {
+
+    //Empty character ERROR
+    const text = document.getElementById('text').value.trim();
+    if(!text) {
+      throw new Error("can't not POST empty string");
+    }
+
     const traslation = await getTraslation(body, form.action)
     if (!traslation) {
       throw new Error("can't not get response object")
