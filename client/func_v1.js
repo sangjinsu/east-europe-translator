@@ -73,6 +73,7 @@ function makeButton(arr) {
 const get_1ndTranslation = async (form) => {
   const body = JSON.stringify(Object.fromEntries(new FormData(form)))
   try {
+
     //Empty character ERROR
     const text = document.getElementById('text').value.trim();
     if(!text) {
@@ -106,9 +107,9 @@ function FindLanguege(langueges) {
 //Select URL acorrding to languege
 function GetURL(SelectedLang) {
   if (SelectedLang === 'romania') {
-    return 'https://example.com/v1/translate/en-ro'
+    return 'https://server.e2translate.com/v1/translate/en-ro'
   } else if (SelectedLang === 'Ukraine') {
-    return 'https://example.com/v1/translate/en-uk'
+    return 'https://server.e2translate.com/v1/translate/en-uk'
   } else {
     alert('번역할 언어를 선택해주세요.')
     return false
