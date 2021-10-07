@@ -4,7 +4,7 @@
 
 ## 0. east europe translator site
 
-[go to east europe trnslator](https://www.e2translate.com/)
+[go to east europe translator](https://www.e2translate.com/)
 
 - https://www.e2translate.com/
 - https://e2translate.com/
