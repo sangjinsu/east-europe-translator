@@ -2,6 +2,8 @@
 
 팀원: 상진수(백엔드), 오수빈(프론트엔드)
 
+[저작권 안내](https://github.com/sangjinsu/east-europe-translator/issues/78)
+
 ## 0. east europe translator site
 
 
